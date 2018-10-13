@@ -7,3 +7,20 @@ before_install:
 
 script:
   - docker run rudydydy/docker-react npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-2"
+  # name of our app create in elasticbeanstalk console
+  app: "docker-react"
+  env: "DockerReact-env"
+  # travis CI gonna zip our code and upload it to S3
+  # and redeploy it to EBS
+  # NOTE: automatically created when you create an EBS instance
+  bucket_name: "elasticbeanstalk-us-west-2-143259537285"
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_id: 
+    secure: "$AWS_SECRET_KEY"
